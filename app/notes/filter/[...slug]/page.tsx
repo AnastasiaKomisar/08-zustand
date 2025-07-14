@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: FilteredNotesPageProps): Prom
     openGraph: {
       title: `Notes sorted by '${tag}' category`,
       description: `This page include all your notes in '${tag}' category`,
-      // url: `https://08-zustand.vercel.app/notes/filter/${tag}`,
+      url: `https://08-zustand.vercel-xi.app/notes/filter/${tag}`,
       images: [
         {
           url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
