@@ -40,7 +40,6 @@ export default function NotesClient({ initialData, tag = '' }: NotesClientProps)
     staleTime: 60 * 1000,
   });
 
-  const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
@@ -62,7 +61,7 @@ export default function NotesClient({ initialData, tag = '' }: NotesClientProps)
           />
         )}
 
-        <Link href="/notes/action/create" className={css.button} onClick={openModal}>
+        <Link href="/notes/action/create" className={css.button}>
           Create note +
         </Link>
       </header>

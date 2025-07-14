@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '@/lib/api';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useNoteStore } from '@/lib/store/noteStore';
 import css from './NoteForm.module.css';
 import { NoteTag } from "@/types/note";
@@ -25,7 +25,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const mutation= useMutation({
     mutationFn: createNote,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.invalidateQueries({ queryKey: ['notes']});
       clearDraft();
       router.back();
     },
@@ -37,6 +37,12 @@ export default function NoteForm({ onClose }: NoteFormProps) {
       content: formData.get('content') as string,
       tag: formData.get('tag') as NoteTag,
     };
+
+    if (!note.title || !note.tag) {
+      alert("Please fill all required fields");
+      return;
+    }
+
     setIsSubmitting(true);
     mutation.mutate(note);
   };
@@ -47,6 +53,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <label htmlFor="title" className={css.label}>Title</label>
         <input
           id="title"
+          name="title" 
           type="text"
           className={css.input}
           value={draft.title}
@@ -58,6 +65,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <label htmlFor="content" className={css.label}>Content</label>
         <textarea
           id="content"
+          name="content"
           className={css.textarea}
           rows={8}
           value={draft.content}
@@ -69,6 +77,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <label htmlFor="tag" className={css.label}>Tag</label>
         <select
           id="tag"
+          name="tag"
           className={css.select}
           value={draft.tag}
           onChange={(e) => setDraft({ tag: e.target.value })}

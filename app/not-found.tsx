@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         alt: 'page not found',
       },
     ],
-    // url: 'https://08-zustand-zeta.vercel.app/not-found',
+    // url: 'https://08-zustand.vercel.app/not-found',
   },
 };
 
