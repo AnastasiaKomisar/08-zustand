@@ -8,11 +8,7 @@ import { useNoteStore } from '@/lib/store/noteStore';
 import css from './NoteForm.module.css';
 import { NoteTag } from "@/types/note";
 
-interface NoteFormProps {
-  onClose?: () => void;
-}
-
-export default function NoteForm({ onClose }: NoteFormProps) {
+export default function NoteForm() {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -80,7 +76,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
           name="tag"
           className={css.select}
           value={draft.tag}
-          onChange={(e) => setDraft({ tag: e.target.value })}
+          onChange={(e) => setDraft({ tag: e.target.value as NoteTag })}
         >
           <option value="Todo">Todo</option>
           <option value="Work">Work</option>
@@ -94,7 +90,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
         <button type="submit" className={css.submitButton} disabled={isSubmitting}>
           Create note
         </button>
-        <button type="button" onClick={onClose} className={css.cancelButton} disabled={isSubmitting}>
+        <button type="button" className={css.cancelButton} disabled={isSubmitting} onClick={() => { router.back(); }}>
           Cancel
         </button>
       </div>

@@ -8,8 +8,6 @@ import { NotesResponse } from '@/lib/api';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
-import Modal from '@/components/Modal/Modal';
-import NoteForm from '@/components/NoteForm/NoteForm';
 import css from './NotesPage.module.css';
 import Link from "next/link";
 
@@ -21,7 +19,6 @@ interface NotesClientProps {
 export default function NotesClient({ initialData, tag = '' }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 300);
   const perPage = 12;
 
@@ -39,8 +36,6 @@ export default function NotesClient({ initialData, tag = '' }: NotesClientProps)
      ...(isFirstLoad ? { initialData } : {}),
     staleTime: 60 * 1000,
   });
-
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={css.app}>
@@ -72,11 +67,6 @@ export default function NotesClient({ initialData, tag = '' }: NotesClientProps)
       {Array.isArray(data?.notes) && data.notes.length > 0 && (
         <NoteList notes={data.notes} />)
       }
-
-      {isModalOpen && (<Modal onClose={closeModal}>
-          <NoteForm />
-        </Modal>
-      )}
     </div>
   );
 }

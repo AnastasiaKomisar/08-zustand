@@ -8,14 +8,14 @@ type FilteredNotesPageProps = {
 
 export async function generateMetadata({ params }: FilteredNotesPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const tag = slug[0];
+  const tag = slug[0] ?? 'All';
 
   return {
     title: `Notes sorted by '${tag}' category`,
     description: `This page include all your notes in '${tag}' category`,
     openGraph: {
       title: `Notes sorted by '${tag}' category`,
-      description: `This page include all your notes in '${tag}' category`,
+      description: `This page includes all your notes in the '${tag}' category`,
       url: `https://08-zustand.vercel-xi.app/notes/filter/${tag}`,
       images: [
         {

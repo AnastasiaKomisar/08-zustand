@@ -1,7 +1,8 @@
+import { NoteTag } from '@/types/note';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const initialDraft = {
+const initialDraft: DraftNote = {
   title: '',
   content: '',
   tag: 'Todo',
@@ -10,7 +11,7 @@ const initialDraft = {
 interface DraftNote {
   title: string;
   content: string;
-  tag: string;
+  tag: NoteTag;
 }
 
 interface NoteStore {
@@ -27,7 +28,7 @@ export const useNoteStore = create<NoteStore>()(
         set((state) => ({
           draft: { ...state.draft, ...note },
         })),
-      clearDraft: () => set({ draft: initialDraft }),
+      clearDraft: () => set({ draft: {...initialDraft} }),
     }),
     {
       name: 'note-draft-storage', 

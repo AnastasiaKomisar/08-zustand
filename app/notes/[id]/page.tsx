@@ -9,14 +9,27 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const { title, content, tag } = await fetchNoteById(Number(id));
+  const note = await fetchNoteById(Number(id));
+  // const { title, content, tag } = await fetchNoteById(Number(id));
+
+  if (!note) {
+    return {
+      title: "Note not found",
+      description: "No note was found with the provided ID.",
+    };
+  }
+
+  const shortContent = note.content.length > 100
+    ? note.content.slice(0, note.content.lastIndexOf(' ', 100)) + "..."
+    : note.content;
 
   return {
-    title: title,
-    description: `${tag}: ${content.slice(0, 30)}...`,
+    title: note.title,
+    description: shortContent,
+    metadataBase: new URL("https://08-zustand-zeta.vercel.app"),
     openGraph: {
-      title: title,
-      description: `${tag}: ${content.slice(0, 30)}...`,
+      title: note.title,
+      description: shortContent,
       url: `https://08-zustand-xi.vercel.app/notes/filter/${id}`, 
       images: [
         {
